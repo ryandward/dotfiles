@@ -19,8 +19,8 @@ setopt HIST_IGNORE_SPACE
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # Plugins
-# plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete web-search pyenv pyvenv-activate)
-plugins=(git zsh-autosuggestions fast-syntax-highlighting zsh-autocomplete web-search pyenv pyvenv-activate)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete web-search pyenv pyvenv-activate)
+# plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-autocomplete web-search pyenv pyvenv-activate)
 
 
 # Zsh and Theme #
