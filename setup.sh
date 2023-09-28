@@ -6,7 +6,7 @@ DOTFILES_DIR=$(dirname "$(realpath "$0")")
 mkdir -p ~/.config/nvim
 
 # Backup and create symlinks
-for file in .bash_profile .vimrc .zshrc p10k.zsh init.vim; do
+for file in .bash_profile .vimrc .zshrc .p10k.zsh init.vim; do
   target=~
   if [ "$file" == "init.vim" ]; then
     target=~/.config/nvim

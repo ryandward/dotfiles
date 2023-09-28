@@ -9,9 +9,8 @@ export ZSH=$HOME/.oh-my-zsh
 export EDITOR='nvim'
 export VISUAL='nvim'
 
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Plugins
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
 source $ZSH/oh-my-zsh.sh
 
 # History settings
@@ -31,16 +30,18 @@ alias ll='ls -l'
 alias c='clear'
 alias la='ls -a'
 alias lla='ls -la'
+alias awk='awk -v FS="\t" -v OFS="\t"'
+alias tabulate='tabulate -s "\t"'
+alias vim=nvim
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'# Add more plugins
-alias tabulate='tabulate -s "\t"'
-alias vim=nvim
-
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions docker conda-extras bioinformatics web-search)
-
 command -v lsd > /dev/null && alias ls='lsd --group-dirs first'
 command -v lsd > /dev/null && alias tree='lsd --tree'
+
+# Plugins
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search pipenv pyenv)
+
 
 # Conda initialization
 __conda_setup="$('/home/ryandward/miniconda3/condabin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -54,14 +55,6 @@ else
     fi
 fi
 unset __conda_setup
-
-# IPFS path
-# export IPFS_PATH=/home/ryandward/Torrent
-export IPFS_PATH=/windows/Torrent
-
-# Powerlevel10k theme
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Load Zsh-syntax-highlighting if available
 if [ -e "${HOME}/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
@@ -86,5 +79,6 @@ body() {
 }
 
 export PATH=$PATH:/home/ryandward/.local/bin
-alias awk='awk -v FS="\t" -v OFS="\t"'
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
