@@ -1,0 +1,32 @@
+font:
+  normal:
+    family: "MesloLGS NF"
+    style: Regular
+    
+colors:
+  # Default Colors
+  primary:
+    background: '#090909'
+    foreground: '#D8D8D8'
+  
+  # Normal Colors
+  normal:
+    black:   '#282828'
+    red:     '#B22222'
+    green:   '#66CD00'
+    yellow:  '#CDAD00'
+    blue:    '#1E90FF'
+    magenta: '#9400D3'
+    cyan:    '#20B2AA'
+    white:   '#C0C0C0'
+  
+  # Bright Colors
+  bright:
+    black:   '#5C5C5C'
+    red:     '#E34242'
+    green:   '#8AF229'
+    yellow:  '#E8C92A'
+    blue:    '#42A7F5'
+    magenta: '#B164E3'
+    cyan:    '#3CD6C2'
+    white:   '#FFFFFF'
