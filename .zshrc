@@ -15,22 +15,57 @@ export VISUAL='nvim'
 eval "$(pyenv init --path)"
 
 # History settings
+setopt HIST_IGNORE_ALL_DUPS
+# setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt APPEND_HISTORY  
+setopt INC_APPEND_HISTORY
+HISTSIZE=1000000
+SAVEHIST=1000000
+
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # Plugins
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete web-search pyenv pyvenv-activate)
-# plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-autocomplete web-search pyenv pyvenv-activate)
+plugins=(fzf-tab git zsh-autosuggestions fast-syntax-highlighting web-search pyenv pyvenv-activate)
+# plugins=(git zsh-autosuggestions zsh-autocomplete web-search pyenv pyvenv-activate)
 
+# Additional Zsh Optimizations
+# Command correction
+setopt CORRECT
+
+# Auto-CD
+setopt AUTO_CD
 
 # Zsh and Theme #
 export ZSH_THEME="powerlevel10k/powerlevel10k"
 source $ZSH/oh-my-zsh.sh
 pyvenv_auto_activate_enable
 
-# Key bindings
-bindkey '^[OA' up-line-or-beginning-search
-bindkey '^[OB' down-line-or-beginning-search
+
+# FZF integration
+export FZF_DEFAULT_OPTS='--extended --ansi --cycle --border --inline-info --height 40% --preview "bat --color=always --style=header,grid --line-range :500 {}" --preview-window down:1:hidden:wrap --bind ctrl-f:page-down,ctrl-b:page-up,ctrl-a:toggle-all,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-r:toggle-sort,ctrl-t:toggle-preview,ctrl-s:toggle-sort,ctrl-z:ignore,ctrl-q:abort'
+
+
+# FZF key bindings
+# make fzf case insensitive
+
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
+bindkey -r '^R'
+bindkey '^R' fzf-history-widget
+bindkey '\et' fzf-file-widget  # Alt+T
+# bindkey '\er' fzf-history-widget  # Alt+R
+bindkey '\ec' fzf-cd-widget  # Alt+C
+# zle -D up-line-or-search
+bindkey "${terminfo[kcuu1]}" fzf-history-widget # Up arrow
+
+
+
+
 
 # Aliases
 alias ls='ls --color=auto'
@@ -63,6 +98,10 @@ else
 fi
 unset __conda_setup
 
+# # Key bindings
+# bindkey '^[OA' up-line-or-beginning-search
+# bindkey '^[OB' down-line-or-beginning-search
+
 # ## Load Zsh-syntax-highlighting if available
 # if [ -e "${HOME}/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
 #   source "${HOME}/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
@@ -73,9 +112,9 @@ unset __conda_setup
 #   source "${HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 # fi
 
-## Set up case-insensitive and substring completion
+# Set up case-insensitive and substring completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-
+ 
 ## Broot
 source /home/ryandward/.config/broot/launcher/bash/br
 
@@ -89,3 +128,4 @@ body() {
 
 ## To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
