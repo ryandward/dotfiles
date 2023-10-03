@@ -2,7 +2,7 @@ font:
   normal:
     family: "MesloLGS NF"
     style: Regular
-    
+  size: 10
 colors:
   # Default Colors
   primary:
