@@ -1,3 +1,5 @@
+eval $(dircolors)
+
 # Powerlevel10k Instant 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -49,7 +51,7 @@ pyvenv_auto_activate_enable
 # FZF integration
 # export FZF_DEFAULT_OPTS='--extended --ansi --cycle --border --inline-info --height 40% --preview "bat --color=always --style=header,grid --line-range :500 {}" --preview-window down:1:hidden:wrap --bind ctrl-f:page-down,ctrl-b:page-up,ctrl-a:toggle-all,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-r:toggle-sort,ctrl-t:toggle-preview,ctrl-s:toggle-sort,ctrl-z:ignore,ctrl-q:abort'
 # export FZF_DEFAULT_OPTS='--extended --cycle --border --inline-info --height 40% --preview "bat --color=always --style=header,grid --line-range :500 {}" --preview-window down:1:hidden:wrap --bind ctrl-f:page-down,ctrl-b:page-up,ctrl-a:toggle-all,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-r:toggle-sort,ctrl-t:toggle-preview,ctrl-s:toggle-sort,ctrl-z:ignore,ctrl-q:abort'
-
+export FZF_DEFAULT_OPTS='--extended --border --height 40% --preview "vim'
 # FZF key bindings
 
 source ~/.config/completion.zsh
@@ -60,8 +62,7 @@ bindkey '\et' fzf-file-widget  # Alt+T
 # bindkey '\er' fzf-history-widget  # Alt+R
 bindkey '\ec' fzf-cd-widget  # Alt+C
 # zle -D up-line-or-search
-bindkey "${terminfo[kcuu1]}" fzf-history-widget # Up arrow
-
+bindkey "${terminfo[kcuu1]}" fzf-autocomplete # Up arrow
 
 zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
 zstyle ':fzf-tab:*' accept-line enter
@@ -76,6 +77,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd -t --group-dirs=first --tree --depth=2 --color=always --icon=always $realpath'
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
+#bindkey "${terminfo[kcuu1]}" fzf-autocomplete-widget
 
 # Aliases
 alias ls='ls --color=auto'
@@ -123,3 +125,34 @@ body() {
 
 ## To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+function ccd() {
+    if [[ "$#" != 0 ]]; then
+        builtin cd "$@";
+        return
+    fi
+
+    while true; do
+        local lsdir=$(echo ".." && lsd -F --color=always --icon=always | grep '/$')
+        local selection="$(printf '%s\n' "${lsdir[@]}" |
+            fzf --ansi --reverse --expect=tab,ctrl-m --preview '
+                __cd_nxt="$(echo {} | sed "s/^[^ ]* //")";
+                __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
+                echo $__cd_path;
+                echo;
+                lsd -t --group-dirs=first --tree --depth=2 --color=always --icon=never "${__cd_path}";
+        ')"
+        
+        local key=$(head -1 <<< "$selection")
+        local dir=$(tail -1 <<< "$selection")
+
+        if [[ $key == 'ctrl-m' ]]; then
+            builtin cd "$(echo $dir | sed 's/^[^ ]* //')" &> /dev/null
+            return
+        elif [[ $key != 'tab' ]]; then
+            return
+        fi
+
+        builtin cd "$(echo $dir | sed 's/^[^ ]* //')" &> /dev/null
+    done
+}
