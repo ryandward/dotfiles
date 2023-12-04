@@ -96,8 +96,8 @@ alias tabulate='tabulate -s "\t"'
 alias vim=nvim
 
 
-command -v lsd > /dev/null && alias ls='lsd --group-dirs first'
-command -v lsd > /dev/null && alias tree='lsd --tree'
+command -v lsd > /dev/null && alias ls='lsd -v --group-dirs first'
+command -v lsd > /dev/null && alias tree='lsd -v --tree'
 
 # Tools
 ## Conda initialization
