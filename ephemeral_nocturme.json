@@ -1,0 +1,26 @@
+{
+    "name": "Ephemeral Nocturne",
+    "type": "dark",
+    "colors": {
+        "editor.background": "#090909",
+        "editor.foreground": "#D8D8D8",
+        "terminal.ansiBlack": "#282828",
+        "terminal.ansiRed": "#B22222",
+        "terminal.ansiGreen": "#66CD00",
+        "terminal.ansiYellow": "#CDAD00",
+        "terminal.ansiBlue": "#1E90FF",
+        "terminal.ansiMagenta": "#9400D3",
+        "terminal.ansiCyan": "#20B2AA",
+        "terminal.ansiWhite": "#C0C0C0",
+        "terminal.ansiBrightBlack": "#5C5C5C",
+        "terminal.ansiBrightRed": "#E34242",
+        "terminal.ansiBrightGreen": "#8AF229",
+        "terminal.ansiBrightYellow": "#E8C92A",
+        "terminal.ansiBrightBlue": "#42A7F5",
+        "terminal.ansiBrightMagenta": "#B164E3",
+        "terminal.ansiBrightCyan": "#3CD6C2",
+        "terminal.ansiBrightWhite": "#FFFFFF"
+    },
+    "tokenColors": []
+}
+

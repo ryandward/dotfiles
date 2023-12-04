@@ -1,4 +1,4 @@
-eval $(dircolors)
+eval "$(dircolors ~/.dircolors)"
 
 # Powerlevel10k Instant 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -10,11 +10,12 @@ export PATH=$PATH:/home/ryandward/.local/bin
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export ZSH=$HOME/.oh-my-zsh
-export EDITOR='nvim'
-export VISUAL='nvim'
+export EDITOR='/usr/bin/code-insiders'
+export VISUAL='/usr/bin/code-insiders'
 
 # Pyenv Setting 
 eval "$(pyenv init --path)"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 
 # History settings
 setopt HIST_IGNORE_ALL_DUPS
@@ -32,9 +33,10 @@ SAVEHIST=1000000
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # Plugins
-plugins=(git zsh-autosuggestions fzf-tab fast-syntax-highlighting web-search pyenv pyvenv-activate)
+# plugins=(git zsh-autosuggestions zsh-autocomplete fzf-tab fast-syntax-highlighting web-search pyenv pyvenv-activate)
+plugins=(git zsh-autosuggestions zsh-autocomplete fast-syntax-highlighting web-search pyenv pyvenv-activate)
 # plugins=(git zsh-autosuggestions zsh-autocomplete web-search pyenv pyvenv-activate)
-
+# unused plugins: zsh-syntax-highlighting, f
 # Additional Zsh Optimizations
 # Command correction
 setopt CORRECT
@@ -62,7 +64,7 @@ bindkey '\et' fzf-file-widget  # Alt+T
 # bindkey '\er' fzf-history-widget  # Alt+R
 bindkey '\ec' fzf-cd-widget  # Alt+C
 # zle -D up-line-or-search
-bindkey "${terminfo[kcuu1]}" fzf-autocomplete # Up arrow
+# bindkey "${terminfo[kcuu1]}" fzf-autocomplete # Up arrow
 
 zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
 zstyle ':fzf-tab:*' accept-line enter
@@ -92,6 +94,7 @@ alias lla='ls -la'
 alias awk='awk -v FS="\t" -v OFS="\t"'
 alias tabulate='tabulate -s "\t"'
 alias vim=nvim
+
 
 command -v lsd > /dev/null && alias ls='lsd --group-dirs first'
 command -v lsd > /dev/null && alias tree='lsd --tree'
@@ -156,3 +159,5 @@ function ccd() {
         builtin cd "$(echo $dir | sed 's/^[^ ]* //')" &> /dev/null
     done
 }
+
+disable r

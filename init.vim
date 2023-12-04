@@ -3,9 +3,7 @@ set t_Co=16
 " General settings
 set number                  " Show line numbers
 set wrap                    " Wrap long lines
-set tabstop=4               " Set tab width to 4 spaces
-set shiftwidth=4            " Set indentation width to 4 spaces
-set expandtab               " Use spaces instead of tabs
+set noexpandtab             " Use tabs instead of spaces
 set autoindent              " Auto-indent new lines
 set cursorline              " Highlight the cursor line
 set showmatch               " Highlight matching brackets
@@ -78,4 +76,11 @@ let g:coc_global_extensions = [
 " let g:airline_theme = 'your_airline_theme_here'
 
 let g:airline_powerline_fonts = 1
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use <CR> to confirm completion
+inoremap <expr> <CR>    pumvisible() ? coc#_select_confirm() : "\<CR>"
 
