@@ -5,8 +5,8 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
   if ("httpgd" %in% .packages(all.available = TRUE)) {
     options(vsc.plot = FALSE, vsc.use_httpgd = FALSE)
     options(device = function(...) {
-      httpgd::hgd(silent = TRUE)
-      .vsc.browser(httpgd::hgd_url(history = FALSE), viewer = "Beside")
+      httpgd::hgd(silent = FALSE)
+      .vsc.browser(httpgd::hgd_url(history = FALSE), viewer = FALSE)
     })
   }
 }

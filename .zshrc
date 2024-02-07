@@ -27,14 +27,17 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt APPEND_HISTORY  
 setopt INC_APPEND_HISTORY
-HISTSIZE=1000000
-SAVEHIST=1000000
+
+# HISTSIZE=1000000
+# HISTSIZE=-1
+# SAVEHIST=1000000
+SAVEHIST=-1
 
 HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 
 # Plugins
 # plugins=(git zsh-autosuggestions zsh-autocomplete fzf-tab fast-syntax-highlighting web-search pyenv pyvenv-activate)
-plugins=(git zsh-autosuggestions zsh-autocomplete fast-syntax-highlighting web-search pyenv pyvenv-activate)
+plugins=(git zsh-autosuggestions zsh-autocomplete fast-syntax-highlighting web-search pyenv pyvenv-activate autojump)
 # plugins=(git zsh-autosuggestions zsh-autocomplete web-search pyenv pyvenv-activate)
 # unused plugins: zsh-syntax-highlighting, f
 # Additional Zsh Optimizations
@@ -45,7 +48,12 @@ setopt CORRECT
 setopt AUTO_CD
 
 # Zsh and Theme #
-export ZSH_THEME="powerlevel10k/powerlevel10k"
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  export ZSH_THEME="agnoster"
+  . "$(code-insiders --locate-shell-integration-path zsh)"
+else
+  export ZSH_THEME="powerlevel10k/powerlevel10k"
+fi
 source $ZSH/oh-my-zsh.sh
 pyvenv_auto_activate_enable
 
@@ -100,19 +108,6 @@ command -v lsd > /dev/null && alias ls='lsd -v --group-dirs first'
 command -v lsd > /dev/null && alias tree='lsd -v --tree'
 
 # Tools
-## Conda initialization
-__conda_setup="$('/home/ryandward/miniconda3/condabin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/ryandward/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/ryandward/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/ryandward/miniconda3/condabin:$PATH"
-    fi
-fi
-unset __conda_setup
-
 # Set up case-insensitive and substring completion
 # zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
  
@@ -161,3 +156,30 @@ function ccd() {
 }
 
 disable r
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code-insiders --locate-shell-integration-path zsh)"
+
+eval "$(mcfly init zsh)"
+
+[[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/ryandward/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/ryandward/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/ryandward/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/ryandward/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/home/ryandward/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/home/ryandward/miniforge3/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
+alias conda='echo -e "\e[5;31mWarning: Please use Mamba instead of Conda\e[0m"; mamba'
